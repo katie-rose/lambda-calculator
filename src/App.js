@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+ import { create, all } from "mathjs";
 import "./App.scss";
 // STEP 4 - import the button and display components
 // Don't forget to import any extra css/scss files you build into the correct component
@@ -16,16 +17,21 @@ function App() {
   // Your functions should accept a parameter of the the item data being displayed to the DOM (ie - should recieve 5 if the user clicks on
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
+  const config = {};
+  const math = create(all, config);
+  const [calc, setCalc] = useState(0);
 
-  const [calcDisplay, setCalculator] = useState(0);
-
-  const selectNumber = number => {
-    setCalculator(number);
-  };
-
-  const clearDisplay = () => {
-    setCalculator(0);
-  };
+    const updateCalc = value => {
+      value === "+/-"
+        ? setCalc(math.eval(-calc))
+        : value === "="
+        ? setCalc(math.eval(calc))
+        : value === "C"
+        ? setCalc(0)
+        : calc === 0
+        ? setCalc(value)
+        : setCalc(calc + value);
+    };
 
   return (
     <div className="container">
@@ -33,15 +39,15 @@ function App() {
       <div className="App">
         {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
         <div className="display-container">
-          <Display calcDisplay={calcDisplay} />
+          <Display disp={calc} />
         </div>
         <div className="calculator-container">
           <div className="left-calc-container">
-            <Specials clearDisplay={clearDisplay} />
-            <Numbers selectNumber={selectNumber} />
+            <Specials update={updateCalc} />
+            <Numbers update={updateCalc} />
           </div>
           <div className="right-calc-container">
-            <Operators />
+            <Operators update={updateCalc} />
           </div>
         </div>
       </div>

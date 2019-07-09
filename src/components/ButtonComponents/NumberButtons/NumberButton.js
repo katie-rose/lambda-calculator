@@ -6,14 +6,7 @@ import "../../../App.scss";
 const NumberButton = props => {
   return (
     <>
-      <button
-        className="button"
-        onClick={() => {
-          props.setNumber(props.number);
-        }}
-      >
-        {props.number}
-      </button>
+     {props.number === '0' ? <button onClick={() => props.update(props.number)} className='button'>{props.number}</button> :  <button onClick={() => props.update(props.number)}  className='button'>{props.number}</button>}
     </>
   );
 };

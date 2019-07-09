@@ -4,7 +4,7 @@ import "../../App.scss";
 const Display = (props) => {
   return (
     <div className="display">
-      <p className="display-text">{props.calcDisplay}</p>
+      <p className="display-text">{props.disp}</p>
     </div>
   );
 };

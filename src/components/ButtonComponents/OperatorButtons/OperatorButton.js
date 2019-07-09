@@ -5,7 +5,12 @@ import React from "react";
 const OperatorButton = props => {
   return (
     <>
-      <button className="button">{props.operator.char}</button>
+      <button
+        onClick={() => props.update(props.operator.value)}
+        className="button"
+      >
+        {props.operator.value}
+      </button>
     </>
   );
 };
