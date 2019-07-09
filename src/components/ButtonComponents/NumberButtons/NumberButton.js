@@ -1,13 +1,20 @@
 import React from "react";
-import Numbers from "./Numbers";
+import "../../../App.scss";
 
 /* Display a button element rendering the data being passed down from the parent container on props */
 
-const NumberButton = () => {
+const NumberButton = props => {
   return (
-    <button>
-      <h1>Number</h1>
-    </button>
+    <>
+      <button
+        className="button"
+        onClick={() => {
+          props.setNumber(props.number);
+        }}
+      >
+        {props.number}
+      </button>
+    </>
   );
 };
 

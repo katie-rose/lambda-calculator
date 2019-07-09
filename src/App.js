@@ -1,5 +1,5 @@
-import React from "react";
-import "./App.css";
+import React, { useState } from "react";
+import "./App.scss";
 // STEP 4 - import the button and display components
 // Don't forget to import any extra css/scss files you build into the correct component
 
@@ -17,15 +17,33 @@ function App() {
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
+  const [calcDisplay, setCalculator] = useState(0);
+
+  const selectNumber = number => {
+    setCalculator(number);
+  };
+
+  const clearDisplay = () => {
+    setCalculator(0);
+  };
+
   return (
     <div className="container">
       <Logo />
       <div className="App">
         {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
-        <Display />
-        <Specials />
-        <Operators />
-        <Numbers />
+        <div className="display-container">
+          <Display calcDisplay={calcDisplay} />
+        </div>
+        <div className="calculator-container">
+          <div className="left-calc-container">
+            <Specials clearDisplay={clearDisplay} />
+            <Numbers selectNumber={selectNumber} />
+          </div>
+          <div className="right-calc-container">
+            <Operators />
+          </div>
+        </div>
       </div>
     </div>
   );
