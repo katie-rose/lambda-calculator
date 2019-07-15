@@ -1,10 +1,15 @@
-import React from "react";
-import "./App.css";
+import React, { useState } from "react";
+ import { create, all } from "mathjs";
+import "./App.scss";
 // STEP 4 - import the button and display components
 // Don't forget to import any extra css/scss files you build into the correct component
 
 // Logo has already been provided for you. Do the same for the remaining components
 import Logo from "./components/DisplayComponents/Logo";
+import Display from "./components/DisplayComponents/Display";
+import Specials from "./components/ButtonComponents/SpecialButtons/Specials";
+import Operators from "./components/ButtonComponents/OperatorButtons/Operators";
+import Numbers from "./components/ButtonComponents/NumberButtons/Numbers";
 
 function App() {
   // STEP 5 - After you get the components displaying using the provided data file, write your state hooks here.
@@ -12,12 +17,39 @@ function App() {
   // Your functions should accept a parameter of the the item data being displayed to the DOM (ie - should recieve 5 if the user clicks on
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
+  const config = {};
+  const math = create(all, config);
+  const [calc, setCalc] = useState(0);
+
+    const updateCalc = value => {
+      value === "+/-"
+        ? setCalc(math.eval(-calc))
+        : value === "="
+        ? setCalc(math.eval(calc))
+        : value === "C"
+        ? setCalc(0)
+        : calc === 0
+        ? setCalc(value)
+        : setCalc(calc + value);
+    };
 
   return (
     <div className="container">
       <Logo />
       <div className="App">
         {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
+        <div className="display-container">
+          <Display disp={calc} />
+        </div>
+        <div className="calculator-container">
+          <div className="left-calc-container">
+            <Specials update={updateCalc} />
+            <Numbers update={updateCalc} />
+          </div>
+          <div className="right-calc-container">
+            <Operators update={updateCalc} />
+          </div>
+        </div>
       </div>
     </div>
   );
